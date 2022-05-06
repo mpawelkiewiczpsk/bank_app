@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Router from "../router"
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {
-    Link
+    Link,
+    useLocation
 } from "react-router-dom";
 import { DashboardOutlined, CreditCardOutlined } from '@ant-design/icons';
 
@@ -14,8 +15,18 @@ const items1 = ['1', '2', '3'].map((key) => ({
 }));
 
 function BankLayout() {
+    const { pathname } = useLocation();
+    const [layout, setLayout] = useState(false);
+
+    useEffect(() => {
+
+        setLayout(!pathname.includes('login') && !pathname.includes('register'))
+
+    }, [pathname])
+
 
     return(
+        layout ?
         <Layout>
             <Header className="header">
                 <div className="logo" />
@@ -66,7 +77,7 @@ function BankLayout() {
                     </Content>
                 </Layout>
             </Layout>
-        </Layout>
+        </Layout> : <Router />
     );
 }
 
